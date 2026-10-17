@@ -46,7 +46,7 @@
 const groups = [
   { t: 'Ports i connexions de dades', a: '#2563a8', d: 'Transferència de dades i, sovint, càrrega', items: [
     ['usb2a', 'USB 2.0 Tipus A'], ['usb2b', 'USB 2.0 Tipus B'], ['usb3a', 'USB 3.0 Tipus A'], ['usb3b', 'USB 3.0 Tipus B'],
-    ['mini', 'Mini-USB'], ['micro', 'Micro-USB'], ['usbc', 'USB Tipus C'], ['lightning', 'Lightning'],
+    ['mini', 'Mini-USB'], ['micro', 'Micro-USB'], ['microb', 'Micro-USB B'], ['usbc', 'USB Tipus C'], ['lightning', 'Lightning'],
     ['tb2', 'Thunderbolt 2.0'], ['firewire', 'FireWire'],
   ]},
   { t: 'Ports i connexions de vídeo', a: '#c8366b', d: 'Imatge cap a monitors, projectors i televisors', items: [
@@ -78,7 +78,7 @@ const groups = [
 const has = k => typeof CREDITS !== 'undefined' && k in CREDITS;
 const side = (key, role, name) => `
   <div class="side">
-    ${has(key) || key === 'usb2a-port' || key === 'usb3a-port' || key === 'usb3b-port' || key === 'micro-port' || key === 'dvi-port' || key === 'minihdmi-port' || key === 'minidp-port' || key === 'svideo-port' || key === 'rj11-port' || key === 'sc-port' || key === 'ts-port' || key === 'trs-port' || key === 'trrs-port' || key === 'trrrs-port' || key === 'trrrs-con' || key === 'subminijack-port' || key === 'c9c10-con' || key === 'c21c22-port' || key === 'magsafe-port' || key === 'c15c16-port' || key === 'c15c16-con' || key === 'pci-con' || key === 'pcie16-con' || key === 'pcie1-con'
+    ${has(key) || key === 'usb2a-port' || key === 'usb3a-port' || key === 'usb3b-port' || key === 'micro-port' || key === 'dvi-port' || key === 'minihdmi-port' || key === 'minidp-port' || key === 'svideo-port' || key === 'rj11-port' || key === 'sc-port' || key === 'ts-port' || key === 'trs-port' || key === 'trrs-port' || key === 'trrrs-port' || key === 'trrrs-con' || key === 'subminijack-port' || key === 'c9c10-con' || key === 'c21c22-port' || key === 'magsafe-port' || key === 'c15c16-port' || key === 'c15c16-con' || key === 'pci-con' || key === 'pcie16-con' || key === 'pcie1-con' || key === 'microb-port' || key === 'microb-con'
       ? `<div class="frame"><img src="images/${key === 'usb2a-port' ? 'usb-a-port.jpg' : key === 'trrrs-con' ? 'trrrs-con.jpg' : key === 'c15c16-port' ? 'c16c15-port.jpg' : `${key}.jpg`}" alt="${name}" loading="lazy"></div>`
       : `<div class="frame empty">Imatge pendent</div>`}
     <div class="role">${role}</div><div class="name">${name}</div>
