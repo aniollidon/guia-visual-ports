@@ -11,6 +11,8 @@ const groups = [
   ]},
   { t: 'Àudio', a: '#c98a00', items: [
     ['jack635', 'Jack 6,35 mm'], ['minijack', 'Minijack 3,5 mm'], ['subminijack', 'Subminijack 2,5 mm'], ['rca', 'RCA'],
+  ]},
+  { t: 'Àudio: tipus de jacks', a: '#c98a00', onlyCon: true, items: [
     ['ts', 'TS (mono)'], ['trs', 'TRS (estèreo)'], ['trrs', 'TRRS (estèreo + micro)'], ['trrrs', 'TRRRS'],
   ]},
   { t: 'Xarxa', a: '#2f8f5b', items: [
@@ -42,9 +44,17 @@ const $ = id => document.getElementById(id);
 let score = 0, streak = 0, right = 0, total = 0, queue = [], current = null, answered = false;
 
 // Distractors: majoritàriament del mateix grup, la resta d'altres grups.
-function distractors(item, n, uniqueBy) {
-  const same = shuffle(ITEMS.filter(i => i !== item && i.group === item.group));
-  const other = shuffle(ITEMS.filter(i => i.group !== item.group));
+// Imatges indistingibles: tots comparteixen foto de port; minijack i TRS comparteixen foto de connexió.
+const JACK_PORTS = ['minijack', 'ts', 'trs', 'trrs', 'trrrs'];
+const SAME_PHOTO = {
+  port: k => JACK_PORTS.includes(k) ? JACK_PORTS : [k],
+  con: k => ['minijack', 'trs'].includes(k) ? ['minijack', 'trs'] : [k],
+};
+
+function distractors(item, n, uniqueBy, banned = []) {
+  const ok = i => i !== item && !banned.includes(i.key);
+  const same = shuffle(ITEMS.filter(i => ok(i) && i.group === item.group));
+  const other = shuffle(ITEMS.filter(i => ok(i) && i.group !== item.group));
   const pool = [...same.slice(0, n), ...other];
   const out = [], seen = new Set([uniqueBy(item)]);
   for (const i of pool) {
@@ -64,7 +74,9 @@ function newQuestion() {
   answered = false;
   const item = nextItem();
   // 0: foto del port -> nom, 1: foto de la connexió -> nom, 2: connexió -> escollir port
-  const type = Math.floor(Math.random() * 3);
+  // No es pregunta el nom d'una foto si no permet distingir la resposta.
+  const types = item.group.onlyCon ? [1] : [0, 1, 2].filter(t => t !== 1 || item.key !== 'minijack');
+  const type = types[Math.floor(Math.random() * types.length)];
   current = item;
   $('badge').textContent = item.group.t;
   $('badge').style.background = item.group.a;
@@ -78,7 +90,7 @@ function newQuestion() {
 
   if (type === 2) {
     $('question').textContent = `Quin port correspon a la connexió ${item.conName}?`;
-    const choices = shuffle([item, ...distractors(item, 3, i => i.key)]);
+    const choices = shuffle([item, ...distractors(item, 3, i => i.key, [...SAME_PHOTO.port(item.key), ...JACK_PORTS])]);
     choices.forEach(c => {
       const b = document.createElement('button');
       b.className = 'opt img';
@@ -90,7 +102,9 @@ function newQuestion() {
   } else {
     $('question').textContent = type === 0 ? 'Com es diu aquest port?' : 'Com es diu aquesta connexió?';
     const nameOf = i => type === 0 ? i.portName : i.conName;
-    const choices = shuffle([item, ...distractors(item, 3, nameOf)]);
+    const choices = shuffle([item, ...distractors(item, 3, nameOf,
+      // "Minijack" és la família de TS/TRS/TRRS/TRRRS: seria també una resposta vàlida.
+      [...SAME_PHOTO[kind](item.key), ...(JACK_PORTS.includes(item.key) ? ['minijack'] : [])])]);
     choices.forEach(c => {
       const b = document.createElement('button');
       b.className = 'opt';
