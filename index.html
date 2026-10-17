@@ -28,7 +28,11 @@
   .frame.empty { border:2px dashed #b3ad9b; color:var(--mut); font-size:.75rem; background:transparent; }
   .role { font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--mut); margin-top:8px; }
   .name { font-size:.95rem; font-weight:600; margin-top:2px; }
-  @media print { .card { break-inside:avoid; } }
+  .play { max-width:1400px; margin:0 auto 40px; padding:0 24px; }
+  .play a { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; background:var(--line); color:#fff; text-decoration:none; padding:18px 24px; }
+  .play strong { font-size:1.1rem; }
+  .play span.btn { background:#fff; color:var(--line); padding:8px 16px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; font-size:.8rem; }
+  @media print { .card { break-inside:avoid; } .play { display:none; } }
 </style>
 </head>
 <body>
@@ -39,6 +43,8 @@
 </header>
 
 <main id="poster"></main>
+
+<div class="play"><a href="joc/index.html"><div><strong>Ja ho saps tot?</strong><br>Posa a prova els teus coneixements sobre ports i connexions.</div><span class="btn">Jugar</span></a></div>
 
 <script src="images/credits.js"></script>
 <script>

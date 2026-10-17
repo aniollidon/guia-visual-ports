@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joc de ports i connexions</title>
+<style>
+  :root { --bg:#f1ede2; --line:#1d1d1b; --mut:#6b675c; --ok:#2f8f5b; --ko:#c8366b; --a:#2563a8; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Helvetica Neue", Arial, sans-serif; color:var(--line); background:var(--bg); min-height:100vh; }
+  .wrap { max-width:860px; margin:0 auto; padding:20px; }
+  header { display:flex; justify-content:space-between; align-items:center; border-bottom:4px solid var(--line); padding-bottom:12px; gap:12px; flex-wrap:wrap; }
+  h1 { font-size:1.5rem; font-weight:900; }
+  .stats { display:flex; gap:16px; }
+  .stat { text-align:center; }
+  .stat b { display:block; font-size:1.5rem; }
+  .stat span { font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mut); }
+  .badge { display:inline-block; margin:20px 0 8px; padding:6px 12px; background:var(--a); color:#fff; text-transform:uppercase; letter-spacing:.06em; font-size:.8rem; }
+  h2 { font-size:1.2rem; margin-bottom:14px; }
+  .photo { background:#fff; border:2px solid var(--line); aspect-ratio:4/3; max-height:380px; margin:0 auto 16px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .photo img { width:100%; height:100%; object-fit:contain; }
+  .opts { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  button.opt { background:#fff; border:2px solid var(--line); padding:14px; font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  button.opt:hover:not(:disabled) { background:#e9e4d3; }
+  button.opt.img { padding:6px; }
+  button.opt.img .photoo { aspect-ratio:4/3; display:flex; }
+  button.opt.img img { width:100%; height:100%; object-fit:contain; }
+  button.opt.ok { background:var(--ok); color:#fff; border-color:var(--ok); }
+  button.opt.ko { background:var(--ko); color:#fff; border-color:var(--ko); }
+  button:disabled { cursor:default; }
+  .feedback { min-height:1.6em; margin:16px 0 8px; font-weight:700; }
+  .feedback.ok { color:var(--ok); } .feedback.ko { color:var(--ko); }
+  #next { display:none; background:var(--line); color:#fff; border:0; padding:12px 28px; font-size:1rem; font-weight:700; cursor:pointer; }
+  @media (max-width:520px) { .opts { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Ports i connexions</h1>
+    <div class="stats">
+      <div class="stat"><b id="score">0</b><span>Punts</span></div>
+      <div class="stat"><b id="streak">0</b><span>Ratxa</span></div>
+      <div class="stat"><b id="acc">0/0</b><span>Encerts</span></div>
+    </div>
+  </header>
+  <div id="badge" class="badge"></div>
+  <h2 id="question"></h2>
+  <div id="photo" class="photo"></div>
+  <div id="opts" class="opts"></div>
+  <div id="feedback" class="feedback"></div>
+  <button id="next">Següent</button>
+</div>
+<script src="../images/credits.js"></script>
+<script src="joc.js"></script>
+</body>
+</html>
